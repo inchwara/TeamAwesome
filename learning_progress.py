@@ -43,7 +43,7 @@ def docopt_cmd(func):
 class LearningTracker (cmd.Cmd):
     intro = 'A Program to track personal learning progress when going through any learning program (like boot camp)\n'
     prompt = '(learning_map)'
-
+    
     @docopt_cmd
     def do_add(self, arg):
         """Usage: add <skill> """
@@ -55,9 +55,20 @@ class LearningTracker (cmd.Cmd):
         """Usage: view [--studied] [--todo] 
 
         """
-
-        if arg["--"]
-
+        if arg["--studied"]:
+        	if not self.skills is None:
+        		for i in skills:
+        			if skills[i] == True:
+        				print(i)
+        elif arg["--todo"]:
+        	if not self.skills is None:
+        		for i in skills:
+        			if skills[i] == False:
+        				print(i)
+        else:
+        	if not self.skills is None:
+        		for i in skills:
+        			print (i)
 
     
     def do_quit(self, arg):
