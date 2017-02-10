@@ -17,10 +17,13 @@ from docopt import docopt
 class LearningTracker (cmd.Cmd):
     intro = 'Add Skill'
     prompt = '(learning_map) '
+    
 
 
     def do_add(self, arg):
+       
         """Usage: add <code> """
+         skills[arg["<code>"]] = False
 
         print(arg)
 
