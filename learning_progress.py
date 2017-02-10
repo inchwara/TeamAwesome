@@ -40,17 +40,17 @@ def docopt_cmd(func):
     return fn
     
 
-class LearningTracker (cmd.Cmd):
+class LearningTracker (cmd.Cmd, dict):
     intro = 'A Program to track personal learning progress when going through any learning program (like boot camp)\n'
     prompt = '(learning_map)'
-    def setUp(self):
-    	self.skills = {}
+    def __init__(self):
+    	super(LearningTracker, self).__init__()
 
     @docopt_cmd
     def do_add(self, arg):
         """Usage: add <skill> """
        
-        # self.skills[arg["<skill>"]] = False
+        self[arg["<skill>"]] = False
 
         print(arg)
 
@@ -60,30 +60,31 @@ class LearningTracker (cmd.Cmd):
 
         """
         if arg["--studied"]:
-        	if not self.skills is None:
-        		for i in self.skills:
-        			if skills[i] == True:
+        		for i in self:
+        			if self[i] == True:
         				print(i)
         elif arg["--todo"]:
-        	if not self.skills is None:
-        		for i in self.skills:
-        			if self.skills[i] == False:
+        	
+        		for i in self:
+        			if self[i] == False:
         				print(i)
         else:
-        	if not self.skills is None:
-        		for i in skills:
+        		for i in self:
         			print (i)
-        print(arg)
+        # print(arg)
 
     def do_show_progress(self, arg):
-    	print("You have studied")
+    	count = 0
+    	for i in self:
+    		if self[i] == True:
+    			count = count + 1
+        print("Out of " + str(len(self)) + "skills, you have completed " + str(count))
     def do_quit(self, arg):
 
         print('See you next time!')
         exit()
 
 def main():
-	LearningTracker().setUp()
 	LearningTracker().cmdloop()
 
 if __name__ == '__main__':
