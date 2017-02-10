@@ -5,7 +5,7 @@ A program to track personal learning progress when going through any learning pr
 Usage:
     learning_map add  <skill>
     learning_map view [--studied] [--todo] 
-    learning_map show-progress
+    learning_map show_progress
     learning_map (-h | --help)
 
 
@@ -38,15 +38,19 @@ def docopt_cmd(func):
     fn.__doc__ = func.__doc__
     fn.__dict__.update(func.__dict__)
     return fn
-
+    
 
 class LearningTracker (cmd.Cmd):
     intro = 'A Program to track personal learning progress when going through any learning program (like boot camp)\n'
     prompt = '(learning_map)'
-    
+    def setUp(self):
+    	self.skills = {}
+
     @docopt_cmd
     def do_add(self, arg):
         """Usage: add <skill> """
+       
+        # self.skills[arg["<skill>"]] = False
 
         print(arg)
 
@@ -57,27 +61,31 @@ class LearningTracker (cmd.Cmd):
         """
         if arg["--studied"]:
         	if not self.skills is None:
-        		for i in skills:
+        		for i in self.skills:
         			if skills[i] == True:
         				print(i)
         elif arg["--todo"]:
         	if not self.skills is None:
-        		for i in skills:
-        			if skills[i] == False:
+        		for i in self.skills:
+        			if self.skills[i] == False:
         				print(i)
         else:
         	if not self.skills is None:
         		for i in skills:
         			print (i)
+        print(arg)
 
-    
+    def do_show_progress(self, arg):
+    	print("You have studied")
     def do_quit(self, arg):
 
         print('See you next time!')
         exit()
 
 def main():
+	LearningTracker().setUp()
 	LearningTracker().cmdloop()
 
 if __name__ == '__main__':
 	main()
+
